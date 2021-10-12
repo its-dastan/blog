@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:blog/app/routes.dart';
 import 'package:blog/bloc/theme_bloc/theme_bloc.dart';
 import 'package:blog/bloc/theme_bloc/theme_event.dart';
 import 'package:blog/bloc/theme_bloc/theme_state.dart';
@@ -38,38 +37,39 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     precacheImage(AssetImage(UiUtils.getImagePath("splash.png")), context);
     return MultiBlocProvider(
-        providers: [
-          BlocProvider<ThemeBloc>(
-            create: (_) =>
-                ThemeBloc(ThemeState(themeData: appThemeData[AppTheme.light])),
-          )
-        ],
-        child: Builder(
-          builder: (context) {
-            final currentTheme = context.watch<ThemeBloc>().state.themeData;
-            return MaterialApp(
-              theme: currentTheme,
-              home: Scaffold(
-                body: Center(
-                  child: TextButton(
-                    onPressed: () {
-                      if (currentTheme?.brightness == Brightness.light) {
-                        BlocProvider.of<ThemeBloc>(context).add(
-                            ThemeEvent(theme: appThemeData[AppTheme.dark]));
-                      } else {
-                        BlocProvider.of<ThemeBloc>(context).add(ThemeEvent(
-                          theme: appThemeData[AppTheme.light],
-                        ));
-                      }
-                    },
-                    child: const Text("hello"),
-                  ),
+      providers: [
+        BlocProvider<ThemeBloc>(
+          create: (_) =>
+              ThemeBloc(ThemeState(themeData: appThemeData[AppTheme.light])),
+        )
+      ],
+      child: Builder(
+        builder: (context) {
+          final currentTheme = context.watch<ThemeBloc>().state.themeData;
+          return MaterialApp(
+            theme: currentTheme,
+            home: Scaffold(
+              body: Center(
+                child: TextButton(
+                  onPressed: () {
+                    if (currentTheme?.brightness == Brightness.light) {
+                      BlocProvider.of<ThemeBloc>(context)
+                          .add(ThemeEvent(theme: appThemeData[AppTheme.dark]));
+                    } else {
+                      BlocProvider.of<ThemeBloc>(context).add(ThemeEvent(
+                        theme: appThemeData[AppTheme.light],
+                      ));
+                    }
+                  },
+                  child: const Text("hello"),
                 ),
               ),
-              // initialRoute: ,
-              // onGenerateRoute: ,
-            );
-          },
-        ));
+            ),
+            initialRoute: Routes.splash,
+            onGenerateRoute: Routes.onGenerateRouted,
+          );
+        },
+      ),
+    );
   }
 }
