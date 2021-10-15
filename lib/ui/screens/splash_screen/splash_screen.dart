@@ -40,8 +40,8 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void initAnimation() {
-    logoAnimationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 700));
+    logoAnimationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
     logoScaleUpAnimation = Tween<double>(begin: 0.0, end: 1.1).animate(
         CurvedAnimation(
             parent: logoAnimationController,
@@ -58,6 +58,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   void startAnimation() async {
     await logoAnimationController.forward(from: 0.0);
+    await logoAnimationController.reverse(from: 1.0);
     navigateToNextScreen();
   }
 

@@ -1,5 +1,6 @@
 import 'package:blog/ui/screens/demo.dart';
-import 'package:blog/ui/screens/splash_screen.dart';
+import 'package:blog/ui/screens/splash_screen/splash_screen.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
