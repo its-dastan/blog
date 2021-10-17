@@ -48,23 +48,6 @@ class _MyAppState extends State<MyApp> {
           final currentTheme = context.watch<ThemeBloc>().state.themeData;
           return MaterialApp(
             theme: currentTheme,
-            home: Scaffold(
-              body: Center(
-                child: TextButton(
-                  onPressed: () {
-                    if (currentTheme?.brightness == Brightness.light) {
-                      BlocProvider.of<ThemeBloc>(context)
-                          .add(ThemeEvent(theme: appThemeData[AppTheme.dark]));
-                    } else {
-                      BlocProvider.of<ThemeBloc>(context).add(ThemeEvent(
-                        theme: appThemeData[AppTheme.light],
-                      ));
-                    }
-                  },
-                  child: const Text("hello"),
-                ),
-              ),
-            ),
             initialRoute: Routes.splash,
             onGenerateRoute: Routes.onGenerateRouted,
           );

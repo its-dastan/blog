@@ -53,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void navigateToNextScreen() {
-    Navigator.of(context).pushReplacementNamed(Routes.demo);
+    Navigator.of(context).pushReplacementNamed(Routes.onboardingScreen);
   }
 
   void startAnimation() async {

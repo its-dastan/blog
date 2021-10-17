@@ -1,6 +1,6 @@
-final String appName = "Blog";
-final String packageName = "com.dastan.blog";
+const String appName = "Blog";
+const String packageName = "com.dastan.blog";
 
 // Hive All boxes
-final String authBox = "auth";
-final String userDetailsBox = "userDetails";
+const String authBox = "auth";
+const String userDetailsBox = "userDetails";

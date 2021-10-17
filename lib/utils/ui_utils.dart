@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class UiUtils {
   static String getImagePath(String imageName) {
-    return "assets/$imageName";
+    return "assets/images/$imageName";
   }
 
   static LinearGradient buildLinearGradient(
