@@ -25,9 +25,11 @@ class _DemoState extends State<Demo> {
                   BlocProvider.of<ThemeBloc>(context)
                       .add(ThemeEvent(theme: appThemeData[AppTheme.dark]));
                 } else {
-                  BlocProvider.of<ThemeBloc>(context).add(ThemeEvent(
-                    theme: appThemeData[AppTheme.light],
-                  ));
+                  BlocProvider.of<ThemeBloc>(context).add(
+                    ThemeEvent(
+                      theme: appThemeData[AppTheme.light],
+                    ),
+                  );
                 }
               },
               child: const Text("hello"),

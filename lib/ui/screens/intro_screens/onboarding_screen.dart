@@ -102,7 +102,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: TextButton(
                 onPressed: page == (pages.length - 1)
                     ? () {
-                        Navigator.of(context).pushReplacementNamed(Routes.demo);
+                        Navigator.of(context)
+                            .pushReplacementNamed(Routes.signin);
                       }
                     : () {
                         liquidController.jumpToPage(

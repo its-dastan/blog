@@ -1,4 +1,6 @@
 import 'package:blog/ui/screens/demo.dart';
+import 'package:blog/ui/screens/intro_screens/auth_screens/signin.dart';
+import 'package:blog/ui/screens/intro_screens/auth_screens/signup.dart';
 import 'package:blog/ui/screens/intro_screens/onboarding_screen.dart';
 import 'package:blog/ui/screens/splash_screen/splash_screen.dart';
 
@@ -10,6 +12,8 @@ class Routes {
   static const splash = "splash";
   static const demo = "demo";
   static const onboardingScreen = "onboardingScreen";
+  static const signin = "signin";
+  static const signup = "signup";
 
   static Route<dynamic> onGenerateRouted(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -18,6 +22,10 @@ class Routes {
 
       case demo:
         return CupertinoPageRoute(builder: (context) => const Demo());
+      case signin:
+        return CupertinoPageRoute(builder: (context) => const Signin());
+      case signup:
+        return CupertinoPageRoute(builder: (context) => const SignUp());
 
       case onboardingScreen:
         return CupertinoPageRoute(

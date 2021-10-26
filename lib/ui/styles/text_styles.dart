@@ -16,4 +16,8 @@ class TextStyles {
     fontWeight: FontWeight.bold,
     color: Colors.black,
   );
+
+  static const urlText = TextStyle(
+    color: Color.fromRGBO(143, 148, 251, 1),
+  );
 }
