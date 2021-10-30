@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:blog/app/routes.dart';
 import 'package:blog/ui/styles/text_styles.dart';
 import 'package:blog/ui/widgets/auth_button.dart';
 import 'package:blog/ui/widgets/faded_animation.dart';

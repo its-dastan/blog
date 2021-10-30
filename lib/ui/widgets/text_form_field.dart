@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 class TextFormFieldWidget extends StatelessWidget {
   final String? hintText;
   final bool? obscureText;
-  const TextFormFieldWidget({Key? key, this.hintText, this.obscureText})
+  final Function? validator;
+  const TextFormFieldWidget(
+      {Key? key, this.hintText, this.obscureText, this.validator})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: (val) => null,
       obscureText: obscureText!,
       decoration: InputDecoration(
         border: InputBorder.none,

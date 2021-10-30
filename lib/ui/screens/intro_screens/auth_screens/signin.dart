@@ -16,6 +16,7 @@ class Signin extends StatefulWidget {
 }
 
 class _SigninState extends State<Signin> {
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,19 +115,14 @@ class _SigninState extends State<Signin> {
 
   Widget _form() {
     return Form(
+      key: formKey,
       child: Column(
         children: [
-          const TextFormFieldWidget(
-            hintText: "E-mail or User-Id",
-            obscureText: false,
-          ),
+          _emailField(),
           const SizedBox(
             height: 7.5,
           ),
-          const TextFormFieldWidget(
-            hintText: "Password",
-            obscureText: true,
-          ),
+          _passwordField(),
           const SizedBox(
             height: 10,
           ),
@@ -169,6 +165,50 @@ class _SigninState extends State<Signin> {
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _emailField() {
+    return TextFormField(
+      validator: (value) {
+        log(value!);
+      },
+      obscureText: false,
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        hintText: "E-mail or User-Id",
+        hintStyle: TextStyle(color: Colors.grey[400]),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: const BorderSide(color: Colors.black),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey.shade300),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+    );
+  }
+
+  Widget _passwordField() {
+    return TextFormField(
+      validator: (value) {
+        log(value!);
+      },
+      obscureText: true,
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        hintText: "Password",
+        hintStyle: TextStyle(color: Colors.grey[400]),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: const BorderSide(color: Colors.black),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey.shade300),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
       ),
     );
   }
