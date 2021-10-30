@@ -1,7 +1,10 @@
 import 'package:blog/app/routes.dart';
+import 'package:blog/bloc/auth_bloc/signin_bloc/signin_bloc.dart';
 import 'package:blog/bloc/theme_bloc/theme_bloc.dart';
 import 'package:blog/bloc/theme_bloc/theme_event.dart';
 import 'package:blog/bloc/theme_bloc/theme_state.dart';
+import 'package:blog/repositories_and_models/repositories/auth_repositories.dart';
+import 'package:blog/ui/screens/intro_screens/auth_screens/signin.dart';
 import 'package:blog/ui/styles/app_theme.dart';
 import 'package:blog/utils/constants.dart';
 import 'package:blog/utils/ui_utils.dart';
@@ -36,23 +39,37 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     precacheImage(AssetImage(UiUtils.getImagePath("splash.png")), context);
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<ThemeBloc>(
-          create: (_) =>
-              ThemeBloc(ThemeState(themeData: appThemeData[AppTheme.light])),
-        )
-      ],
-      child: Builder(
-        builder: (context) {
-          final currentTheme = context.watch<ThemeBloc>().state.themeData;
-          return MaterialApp(
-            theme: currentTheme,
-            initialRoute: Routes.splash,
-            onGenerateRoute: Routes.onGenerateRouted,
+    return MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider(
+            create: (context) => AuthRepository(),
+            child: const Signin(),
+          ),
+        ],
+        child: Builder(builder: (context) {
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<ThemeBloc>(
+                create: (_) => ThemeBloc(
+                    ThemeState(themeData: appThemeData[AppTheme.light])),
+              ),
+              BlocProvider<SigninBloc>(
+                create: (_) =>
+                    SigninBloc(authRepo: context.read<AuthRepository>()),
+                child: const Signin(),
+              ),
+            ],
+            child: Builder(
+              builder: (context) {
+                final currentTheme = context.watch<ThemeBloc>().state.themeData;
+                return MaterialApp(
+                  theme: currentTheme,
+                  initialRoute: Routes.splash,
+                  onGenerateRoute: Routes.onGenerateRouted,
+                );
+              },
+            ),
           );
-        },
-      ),
-    );
+        }));
   }
 }

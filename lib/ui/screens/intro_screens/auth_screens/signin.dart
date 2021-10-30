@@ -1,12 +1,17 @@
 import 'dart:developer';
 
 import 'package:blog/app/routes.dart';
+import 'package:blog/bloc/auth_bloc/form_submission_status.dart';
+import 'package:blog/bloc/auth_bloc/signin_bloc/signin_bloc.dart';
+import 'package:blog/bloc/auth_bloc/signin_bloc/signin_event.dart';
+import 'package:blog/bloc/auth_bloc/signin_bloc/signin_state.dart';
 import 'package:blog/ui/styles/text_styles.dart';
 import 'package:blog/ui/widgets/auth_button.dart';
 import 'package:blog/ui/widgets/faded_animation.dart';
 import 'package:blog/ui/widgets/text_form_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Signin extends StatefulWidget {
   const Signin({Key? key}) : super(key: key);
@@ -114,102 +119,134 @@ class _SigninState extends State<Signin> {
   }
 
   Widget _form() {
-    return Form(
-      key: formKey,
-      child: Column(
-        children: [
-          _emailField(),
-          const SizedBox(
-            height: 7.5,
-          ),
-          _passwordField(),
-          const SizedBox(
-            height: 10,
-          ),
-          const Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              "Forgot the password?",
-              style: TextStyles.urlText,
+    return BlocListener<SigninBloc, SigninState>(
+      listener: (context, state) {
+        final formStatus = state.formStatus;
+        if (formStatus is SubmissionFailed) {
+          _showSnackBar(context, formStatus.exception.toString());
+        }
+      },
+      child: Form(
+        key: formKey,
+        child: Column(
+          children: [
+            _emailField(),
+            const SizedBox(
+              height: 7.5,
             ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushReplacementNamed(context, Routes.demo);
-            },
-            child: const AuthButton(
-              text: "Signin",
+            _passwordField(),
+            const SizedBox(
+              height: 10,
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                "Don't have an account?",
+            const Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                "Forgot the password?",
+                style: TextStyles.urlText,
               ),
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).pushNamed(Routes.signup);
-                },
-                child: const Text(
-                  " Signup!",
-                  style: TextStyles.urlText,
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            _signinButton(),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "Don't have an account?",
                 ),
-              )
-            ],
-          ),
-        ],
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(Routes.signup);
+                  },
+                  child: const Text(
+                    " Signup!",
+                    style: TextStyles.urlText,
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _emailField() {
-    return TextFormField(
-      validator: (value) {
-        log(value!);
-      },
-      obscureText: false,
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        hintText: "E-mail or User-Id",
-        hintStyle: TextStyle(color: Colors.grey[400]),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: const BorderSide(color: Colors.black),
-          borderRadius: BorderRadius.circular(10.0),
+    return BlocBuilder<SigninBloc, SigninState>(builder: (context, state) {
+      return TextFormField(
+        obscureText: false,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: "E-mail or User-Id",
+          hintStyle: TextStyle(color: Colors.grey[400]),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: const BorderSide(color: Colors.black),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.shade300),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
         ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey.shade300),
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-    );
+        validator: (value) =>
+            state.isValidUsername ? null : "Username is too Short",
+        onChanged: (value) => context
+            .read<SigninBloc>()
+            .add(SigninUsernameChanged(username: value)),
+      );
+    });
   }
 
   Widget _passwordField() {
-    return TextFormField(
-      validator: (value) {
-        log(value!);
-      },
-      obscureText: true,
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        hintText: "Password",
-        hintStyle: TextStyle(color: Colors.grey[400]),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: const BorderSide(color: Colors.black),
-          borderRadius: BorderRadius.circular(10.0),
+    return BlocBuilder<SigninBloc, SigninState>(builder: (context, state) {
+      return TextFormField(
+        obscureText: true,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: "Password",
+          hintStyle: TextStyle(color: Colors.grey[400]),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: const BorderSide(color: Colors.black),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.shade300),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
         ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey.shade300),
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-    );
+        validator: (value) =>
+            state.isValidPassword ? null : "Password is too short.",
+        onChanged: (value) => context
+            .read<SigninBloc>()
+            .add(SigninPasswordChanged(password: value)),
+      );
+    });
+  }
+
+  Widget _signinButton() {
+    return BlocBuilder<SigninBloc, SigninState>(builder: (context, state) {
+      return (state.formStatus is FormSubmitting)
+          ? const CircularProgressIndicator()
+          : GestureDetector(
+              onTap: () {
+                if (formKey.currentState!.validate()) {
+                  context.read<SigninBloc>().add(SigninSubmitted());
+                }
+                // Navigator.pushReplacementNamed(context, Routes.demo);
+              },
+              child: const AuthButton(
+                text: "Signin",
+              ),
+            );
+    });
+  }
+
+  void _showSnackBar(BuildContext context, String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

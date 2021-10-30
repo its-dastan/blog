@@ -2,7 +2,10 @@ import 'package:blog/bloc/auth_bloc/form_submission_status.dart';
 
 class SigninState {
   final String? username;
+  bool get isValidUsername => username!.length > 3;
   final String? password;
+
+  bool get isValidPassword => password!.length > 3;
   final FormSubmissionStatus formStatus;
 
   SigninState({

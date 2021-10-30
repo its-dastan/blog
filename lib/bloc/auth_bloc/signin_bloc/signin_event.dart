@@ -14,4 +14,4 @@ class SigninPasswordChanged extends SigninEvent {
   SigninPasswordChanged({this.password});
 }
 
-class LoginSubmitted extends SigninEvent {}
+class SigninSubmitted extends SigninEvent {}
