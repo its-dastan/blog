@@ -1,11 +1,17 @@
 import 'dart:developer';
 
+import 'package:blog/app/routes.dart';
+import 'package:blog/ui/auth/form_submission_status.dart';
+import 'package:blog/ui/auth/signup_bloc/signup_bloc.dart';
+import 'package:blog/ui/auth/signup_bloc/signup_event.dart';
+import 'package:blog/ui/auth/signup_bloc/signup_state.dart';
 import 'package:blog/ui/styles/text_styles.dart';
 import 'package:blog/ui/auth/widgets/auth_button.dart';
 import 'package:blog/ui/auth/widgets/faded_animation.dart';
 import 'package:blog/ui/auth/widgets/text_form_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -15,6 +21,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,44 +120,76 @@ class _SignUpState extends State<SignUp> {
 
   Widget _form() {
     return Form(
+      key: _formKey,
       child: Column(
         children: [
-          const TextFormFieldWidget(
-            hintText: "Name",
-            obscureText: false,
+          BlocBuilder<SignupBloc, SignupState>(
+            builder: (context, state) {
+              return TextFormFieldWidget(
+                  hintText: "Name",
+                  obscureText: false,
+                  validator: (value) =>
+                      state.isValidName ? null : "name is too short",
+                  onChanged: (value) {
+                    log(value);
+                    context
+                        .read<SignupBloc>()
+                        .add(SignupNameChanged(name: value));
+                  });
+            },
           ),
           const SizedBox(
             height: 7.5,
           ),
-          const TextFormFieldWidget(
-            hintText: "E-mail or User-Id",
-            obscureText: false,
+          BlocBuilder<SignupBloc, SignupState>(
+            builder: (context, state) {
+              return TextFormFieldWidget(
+                hintText: "Username",
+                obscureText: false,
+                validator: (value) =>
+                    state.isValidUsername ? null : "Username is too short",
+                onChanged: (value) => context
+                    .read<SignupBloc>()
+                    .add(SignupUsernameChanged(username: value)),
+              );
+            },
           ),
           const SizedBox(
             height: 7.5,
           ),
-          const TextFormFieldWidget(
-            hintText: "Password",
-            obscureText: true,
+          BlocBuilder<SignupBloc, SignupState>(
+            builder: (context, state) {
+              return TextFormFieldWidget(
+                hintText: "Password",
+                obscureText: true,
+                validator: (value) =>
+                    state.isValidPassword ? null : "Password is too short",
+                onChanged: (value) => context
+                    .read<SignupBloc>()
+                    .add(SignupPasswordChanged(password: value)),
+              );
+            },
           ),
           const SizedBox(
             height: 7.5,
           ),
-          const TextFormFieldWidget(
-            hintText: "Confirm Password",
-            obscureText: true,
+          BlocBuilder<SignupBloc, SignupState>(
+            builder: (context, state) {
+              return TextFormFieldWidget(
+                hintText: "Confirm Password",
+                obscureText: true,
+                validator: (value) =>
+                    state.isConfirmPassword ? null : "Password does not match",
+                onChanged: (value) => context.read<SignupBloc>().add(
+                      SignupConfirmPasswordChanged(confirmPassword: value),
+                    ),
+              );
+            },
           ),
           const SizedBox(
             height: 30,
           ),
-          GestureDetector(
-            onTap: () {
-              log("Signup Clicked");
-            },
-            child: const AuthButton(
-              text: "Signup",
-            ),
-          ),
+          _signupButton(),
           const SizedBox(
             height: 20,
           ),
@@ -174,5 +213,23 @@ class _SignUpState extends State<SignUp> {
         ],
       ),
     );
+  }
+
+  Widget _signupButton() {
+    return BlocBuilder<SignupBloc, SignupState>(builder: (context, state) {
+      return (state.formStatus is FormSubmitting)
+          ? const CircularProgressIndicator()
+          : GestureDetector(
+              onTap: () {
+                if (_formKey.currentState!.validate()) {
+                  context.read<SignupBloc>().add(SignupSubmitted());
+                }
+                // Navigator.pushReplacementNamed(context, Routes.demo);
+              },
+              child: const AuthButton(
+                text: "Signup",
+              ),
+            );
+    });
   }
 }

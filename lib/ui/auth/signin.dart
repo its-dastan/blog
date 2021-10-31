@@ -20,7 +20,7 @@ class Signin extends StatefulWidget {
 }
 
 class _SigninState extends State<Signin> {
-  final formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,7 +126,7 @@ class _SigninState extends State<Signin> {
         }
       },
       child: Form(
-        key: formKey,
+        key: _formKey,
         child: Column(
           children: [
             _emailField(),
@@ -180,7 +180,7 @@ class _SigninState extends State<Signin> {
         obscureText: false,
         decoration: InputDecoration(
           border: InputBorder.none,
-          hintText: "E-mail or User-Id",
+          hintText: "Username",
           hintStyle: TextStyle(color: Colors.grey[400]),
           focusedBorder: UnderlineInputBorder(
             borderSide: const BorderSide(color: Colors.black),
@@ -232,10 +232,10 @@ class _SigninState extends State<Signin> {
           ? const CircularProgressIndicator()
           : GestureDetector(
               onTap: () {
-                if (formKey.currentState!.validate()) {
+                if (_formKey.currentState!.validate()) {
                   context.read<SigninBloc>().add(SigninSubmitted());
                 }
-                Navigator.pushReplacementNamed(context, Routes.demo);
+                // Navigator.pushReplacementNamed(context, Routes.demo);
               },
               child: const AuthButton(
                 text: "Signin",

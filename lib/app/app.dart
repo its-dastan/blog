@@ -2,6 +2,7 @@ import 'package:blog/app/routes.dart';
 import 'package:blog/ui/auth/auth_repositories.dart';
 import 'package:blog/ui/auth/signin.dart';
 import 'package:blog/ui/auth/signin_bloc/signin_bloc.dart';
+import 'package:blog/ui/auth/signup_bloc/signup_bloc.dart';
 import 'package:blog/ui/theme/app_theme.dart';
 import 'package:blog/ui/theme/theme_bloc/theme_bloc.dart';
 import 'package:blog/ui/theme/theme_bloc/theme_state.dart';
@@ -55,8 +56,11 @@ class _MyAppState extends State<MyApp> {
               BlocProvider<SigninBloc>(
                 create: (_) =>
                     SigninBloc(authRepo: context.read<AuthRepository>()),
-                child: const Signin(),
               ),
+              BlocProvider<SignupBloc>(
+                create: (_) =>
+                    SignupBloc(authRepo: context.read<AuthRepository>()),
+              )
             ],
             child: Builder(
               builder: (context) {
