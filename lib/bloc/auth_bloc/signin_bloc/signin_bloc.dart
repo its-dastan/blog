@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:blog/bloc/auth_bloc/form_submission_status.dart';
 import 'package:blog/bloc/auth_bloc/signin_bloc/signin_event.dart';
 import 'package:blog/bloc/auth_bloc/signin_bloc/signin_state.dart';
-import 'package:blog/repositories_and_models/repositories/auth_repositories.dart';
+import 'package:blog/bloc/auth_bloc/auth_repositories.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SigninBloc extends Bloc<SigninEvent, SigninState> {

@@ -8,7 +8,6 @@ import 'package:blog/bloc/auth_bloc/signin_bloc/signin_state.dart';
 import 'package:blog/ui/styles/text_styles.dart';
 import 'package:blog/ui/widgets/auth_button.dart';
 import 'package:blog/ui/widgets/faded_animation.dart';
-import 'package:blog/ui/widgets/text_form_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -236,7 +235,7 @@ class _SigninState extends State<Signin> {
                 if (formKey.currentState!.validate()) {
                   context.read<SigninBloc>().add(SigninSubmitted());
                 }
-                // Navigator.pushReplacementNamed(context, Routes.demo);
+                Navigator.pushReplacementNamed(context, Routes.demo);
               },
               child: const AuthButton(
                 text: "Signin",
