@@ -1,5 +1,5 @@
-import 'package:blog/bloc/theme_bloc/theme_event.dart';
-import 'package:blog/bloc/theme_bloc/theme_state.dart';
+import 'package:blog/ui/theme/theme_bloc/theme_event.dart';
+import 'package:blog/ui/theme/theme_bloc/theme_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {

@@ -1,13 +1,13 @@
 import 'dart:developer';
 
 import 'package:blog/app/routes.dart';
-import 'package:blog/bloc/auth_bloc/form_submission_status.dart';
-import 'package:blog/bloc/auth_bloc/signin_bloc/signin_bloc.dart';
-import 'package:blog/bloc/auth_bloc/signin_bloc/signin_event.dart';
-import 'package:blog/bloc/auth_bloc/signin_bloc/signin_state.dart';
+import 'package:blog/ui/auth/form_submission_status.dart';
+import 'package:blog/ui/auth/signin_bloc/signin_bloc.dart';
+import 'package:blog/ui/auth/signin_bloc/signin_event.dart';
+import 'package:blog/ui/auth/signin_bloc/signin_state.dart';
 import 'package:blog/ui/styles/text_styles.dart';
-import 'package:blog/ui/widgets/auth_button.dart';
-import 'package:blog/ui/widgets/faded_animation.dart';
+import 'package:blog/ui/auth/widgets/auth_button.dart';
+import 'package:blog/ui/auth/widgets/faded_animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +24,7 @@ class _SigninState extends State<Signin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: SingleChildScrollView(
         child: Column(
           children: [

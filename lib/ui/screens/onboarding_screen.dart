@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:blog/app/routes.dart';
 import 'package:blog/ui/styles/text_styles.dart';
-import 'package:blog/ui/widgets/onboarding_pages.dart';
+import 'package:blog/ui/screens/widgets/onboarding_pages.dart';
 import 'package:blog/utils/ui_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';

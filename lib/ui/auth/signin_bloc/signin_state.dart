@@ -1,4 +1,4 @@
-import 'package:blog/bloc/auth_bloc/form_submission_status.dart';
+import 'package:blog/ui/auth/form_submission_status.dart';
 
 class SigninState {
   final String? username;

@@ -1,4 +1,4 @@
-import 'package:blog/ui/screens/intro_screens/auth_screens/signin.dart';
+import 'package:blog/ui/auth/signin.dart';
 
 abstract class SigninEvent {}
 

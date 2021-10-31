@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:blog/ui/styles/text_styles.dart';
-import 'package:blog/ui/widgets/auth_button.dart';
-import 'package:blog/ui/widgets/faded_animation.dart';
-import 'package:blog/ui/widgets/text_form_field.dart';
+import 'package:blog/ui/auth/widgets/auth_button.dart';
+import 'package:blog/ui/auth/widgets/faded_animation.dart';
+import 'package:blog/ui/auth/widgets/text_form_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

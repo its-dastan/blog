@@ -1,8 +1,8 @@
 import 'package:blog/ui/screens/demo.dart';
-import 'package:blog/ui/screens/intro_screens/auth_screens/signin.dart';
-import 'package:blog/ui/screens/intro_screens/auth_screens/signup.dart';
-import 'package:blog/ui/screens/intro_screens/onboarding_screen.dart';
-import 'package:blog/ui/screens/splash_screen/splash_screen.dart';
+import 'package:blog/ui/auth/signin.dart';
+import 'package:blog/ui/auth/signup.dart';
+import 'package:blog/ui/screens/onboarding_screen.dart';
+import 'package:blog/ui/screens/splash_screen.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

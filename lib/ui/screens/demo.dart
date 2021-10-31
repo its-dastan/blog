@@ -1,6 +1,6 @@
-import 'package:blog/bloc/theme_bloc/theme_bloc.dart';
-import 'package:blog/bloc/theme_bloc/theme_event.dart';
-import 'package:blog/ui/styles/app_theme.dart';
+import 'package:blog/ui/theme/app_theme.dart';
+import 'package:blog/ui/theme/theme_bloc/theme_bloc.dart';
+import 'package:blog/ui/theme/theme_bloc/theme_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
