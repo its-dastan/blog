@@ -1,10 +1,12 @@
 import 'dart:math';
 import 'package:blog/app/routes.dart';
+import 'package:blog/ui/navigator_cubit.dart';
 import 'package:blog/ui/styles/text_styles.dart';
 import 'package:blog/ui/screens/widgets/onboarding_pages.dart';
 import 'package:blog/utils/ui_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:provider/src/provider.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -102,8 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: TextButton(
                 onPressed: page == (pages.length - 1)
                     ? () {
-                        Navigator.of(context)
-                            .pushReplacementNamed(Routes.signin);
+                        context.read<NavigatorCubit>().showSignin();
                       }
                     : () {
                         liquidController.jumpToPage(

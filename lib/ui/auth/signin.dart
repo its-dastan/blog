@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:blog/app/routes.dart';
+import 'package:blog/ui/navigator_cubit.dart';
 import 'package:blog/ui/auth/form_submission_status.dart';
 import 'package:blog/ui/auth/signin_bloc/signin_bloc.dart';
 import 'package:blog/ui/auth/signin_bloc/signin_event.dart';
@@ -21,6 +22,8 @@ class Signin extends StatefulWidget {
 
 class _SigninState extends State<Signin> {
   final _formKey = GlobalKey<FormState>();
+  String? username;
+  String? password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,7 +162,8 @@ class _SigninState extends State<Signin> {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).pushNamed(Routes.signup);
+                    // Navigator.of(context).pushNamed(Routes.signup);
+                    return context.read<NavigatorCubit>().showSignup();
                   },
                   child: const Text(
                     " Signup!",
@@ -177,6 +181,7 @@ class _SigninState extends State<Signin> {
   Widget _emailField() {
     return BlocBuilder<SigninBloc, SigninState>(builder: (context, state) {
       return TextFormField(
+        onSaved: (value) => username = value,
         obscureText: false,
         decoration: InputDecoration(
           border: InputBorder.none,
@@ -203,6 +208,7 @@ class _SigninState extends State<Signin> {
   Widget _passwordField() {
     return BlocBuilder<SigninBloc, SigninState>(builder: (context, state) {
       return TextFormField(
+        onSaved: (value) => password = value,
         obscureText: true,
         decoration: InputDecoration(
           border: InputBorder.none,
@@ -232,10 +238,20 @@ class _SigninState extends State<Signin> {
           ? const CircularProgressIndicator()
           : GestureDetector(
               onTap: () {
+                log("Signin Clicked");
                 if (_formKey.currentState!.validate()) {
-                  context.read<SigninBloc>().add(SigninSubmitted());
+                  // context.read<NavigatorCubit>().showLoading();
+                  _formKey.currentState!.save();
+                  context.read<SigninBloc>().add(
+                        SigninSubmitted(
+                          username: state.username,
+                          password: state.password,
+                        ),
+                      );
+                  // if (state.formStatus is SubmissionSuccess) {
+                  //   Navigator.pushReplacementNamed(context, Routes.demo);
+                  // }
                 }
-                // Navigator.pushReplacementNamed(context, Routes.demo);
               },
               child: const AuthButton(
                 text: "Signin",
@@ -247,5 +263,6 @@ class _SigninState extends State<Signin> {
   void _showSnackBar(BuildContext context, String message) {
     final snackBar = SnackBar(content: Text(message));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    context.read<SigninBloc>().add(SigninInitial());
   }
 }

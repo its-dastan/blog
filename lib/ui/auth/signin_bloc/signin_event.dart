@@ -2,6 +2,8 @@ import 'package:blog/ui/auth/signin.dart';
 
 abstract class SigninEvent {}
 
+class SigninInitial extends SigninEvent {}
+
 class SigninUsernameChanged extends SigninEvent {
   final String? username;
 
@@ -14,4 +16,9 @@ class SigninPasswordChanged extends SigninEvent {
   SigninPasswordChanged({this.password});
 }
 
-class SigninSubmitted extends SigninEvent {}
+class SigninSubmitted extends SigninEvent {
+  final String? username;
+  final String? password;
+
+  SigninSubmitted({this.username, this.password});
+}

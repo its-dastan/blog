@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:blog/app/routes.dart';
+import 'package:blog/ui/navigator_cubit.dart';
 import 'package:blog/ui/auth/form_submission_status.dart';
 import 'package:blog/ui/auth/signup_bloc/signup_bloc.dart';
 import 'package:blog/ui/auth/signup_bloc/signup_event.dart';
@@ -201,7 +202,7 @@ class _SignUpState extends State<SignUp> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.of(context).pop();
+                  return context.read<NavigatorCubit>().showSignin();
                 },
                 child: const Text(
                   " Signin!",

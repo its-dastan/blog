@@ -1,6 +1,8 @@
 import 'package:blog/app/routes.dart';
+import 'package:blog/ui/navigator_cubit.dart';
 import 'package:blog/utils/ui_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -53,7 +55,8 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void navigateToNextScreen() {
-    Navigator.of(context).pushReplacementNamed(Routes.onboardingScreen);
+    // Navigator.of(context).pushReplacementNamed(Routes.onboardingScreen);
+    context.read<NavigatorCubit>().showOnboard();
   }
 
   void startAnimation() async {
